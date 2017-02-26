@@ -9,35 +9,54 @@ import java.util.HashSet;
  * Created by Administrator on 2017-02-19.
  */
 
-public class MiniChatServer implements Broadcast, SocketAdder{
+public class MiniChatServer implements Broadcast, SocketAdder, ICommander{
 
     private static final int Max_Client_Number = 20;
 
     private ServerSocket serverSocket;
 
     private MiniChatServerWaiter waiter;
+    private MiniChatServerCommander commander;
     private HashSet<MiniChatServerReceiver> receivers;
 
     public MiniChatServer(){
-        waiter = new MiniChatServerWaiter(this);
+        waiter = new MiniChatServerWaiter(this, this);
+        commander = new MiniChatServerCommander(this, this);
         receivers = new HashSet<>();
     }
 
     public void start(){
         createServerSocket();
         new Thread(waiter).start();
+        new Thread(commander).start();
     }
 
     @Override
     public void addSocket(Socket socket){
-        MiniChatServerReceiver receiver = new MiniChatServerReceiver(this, socket);
+        MiniChatServerReceiver receiver = new MiniChatServerReceiver(this, this, socket);
         receivers.add(receiver);
         new Thread(receiver).start();
-        displayCurrentUserCount();
     }
 
+    @Override
     public void displayCurrentUserCount(){
         System.out.println(String.format("현재 접속한 유저 수: %d명", receivers.size()));
+    }
+
+    @Override
+    public void exit() {
+        waiter.close();
+        broadcast("서버가 종료됩니다. 감사합니다.");
+        for( MiniChatServerReceiver receiver : receivers) {
+            receiver.disconnect();
+            receiver.close();
+        }
+        receivers.clear();
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -52,7 +71,6 @@ public class MiniChatServer implements Broadcast, SocketAdder{
     @Override
     public void notiLeftUser(MiniChatServerReceiver receiver) {
         receivers.remove(receiver);
-        displayCurrentUserCount();
     }
 
     private void createServerSocket(){

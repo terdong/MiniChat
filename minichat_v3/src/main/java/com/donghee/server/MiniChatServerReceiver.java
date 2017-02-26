@@ -14,13 +14,17 @@ import java.net.Socket;
 public class MiniChatServerReceiver implements Runnable {
 
     private Broadcast server;
+    private ICommander commander;
     private Socket socket;
 
     private PrintWriter printWriter;
     private ObjectInputStream objectInputStream;
 
-    public MiniChatServerReceiver(Broadcast server, Socket socket) {
+    private Protocol protocol;
+
+    public MiniChatServerReceiver(Broadcast server, ICommander commander, Socket socket) {
         this.server = server;
+        this.commander = commander;
         this.socket = socket;
         try {
             printWriter = new PrintWriter(socket.getOutputStream(), true);
@@ -41,35 +45,47 @@ public class MiniChatServerReceiver implements Runnable {
             objectInputStream = new ObjectInputStream(socket.getInputStream());
 
             for (; (obj = objectInputStream.readObject()) != null; ) {
-                Protocol p = (Protocol) obj;
-                message = p.message;
+                protocol = (Protocol) obj;
+                message = protocol.message;
                 if (message.equals("exit")) {
-                    println("disconnect");
-                    socket.close();
-                    message = String.format("[%s]님이 나가셨습니다.", p.nickName);
-                    server.broadcast(message);
-                    System.out.println(message);
-                    server.notiLeftUser(this);
+                    disconnect();
                     break;
                 } else {
-                    message = String.format("[%s]: %s", p.nickName, p.message);
+                    message = String.format("[%s]: %s", protocol.nickName, protocol.message);
                     System.out.println(message);
                     server.broadcast(message);
                 }
             }
-
-            close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        close();
     }
 
-    private void close() throws IOException{
+    public  void disconnect(){
+        println("disconnect");
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String message = String.format("[%s]님이 나가셨습니다.", protocol.nickName);
+        server.broadcast(message);
+        System.out.println(message);
+        server.notiLeftUser(this);
+        commander.displayCurrentUserCount();
+    }
+
+    public void close() {
         printWriter.close();
         System.out.println("PrintWriter close 완료");
-        objectInputStream.close();
+        try {
+            objectInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("ObjectInputStream close 완료");
     }
 }

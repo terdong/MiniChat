@@ -74,9 +74,9 @@ public class MiniChatClient implements Disconnector {
 
         System.out.println("닉네임 설정해주세요.");
         System.out.print(">>");
-        String nick = scanner.next();
+        String nick = scanner.nextLine();
         Protocol p = new Protocol(nick);
-
+        //scanner.reset();
         System.out.println("채팅을 시작합니다. 종료하시려면 \"exit\"를 입력해주세요.");
         for(;isAlived;){
             String message = scanner.nextLine();

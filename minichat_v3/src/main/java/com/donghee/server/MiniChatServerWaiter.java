@@ -11,10 +11,16 @@ import java.net.Socket;
 public class MiniChatServerWaiter implements Runnable{
 
     private SocketAdder server;
+    private ICommander commander;
     private ServerSocket serverSocket;
 
-    public MiniChatServerWaiter(SocketAdder server){
+    private boolean isAlive;
+
+    public MiniChatServerWaiter(SocketAdder server, ICommander commander){
+
         this.server = server;
+        this.commander = commander;
+        isAlive = true;
     }
 
     public void setServerSocket(ServerSocket serverSocket){
@@ -24,7 +30,7 @@ public class MiniChatServerWaiter implements Runnable{
     @Override
     public void run() {
 
-        for(;!serverSocket.isClosed();){
+        for(; isAlive;){
             Socket socket = null;
             try {
                 socket = serverSocket.accept();
@@ -34,7 +40,12 @@ public class MiniChatServerWaiter implements Runnable{
             }
             if(socket != null){
                 server.addSocket(socket);
+                commander.displayCurrentUserCount();
             }
         }
+    }
+
+    public void close(){
+        isAlive = false;
     }
 }
