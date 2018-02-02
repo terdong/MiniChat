@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class MiniChatClient implements Disconnector {
 
-    private static final boolean def = false;
+    private static final boolean def = true;
 
     private Socket socket;
     private ObjectOutputStream objectStream = null;
@@ -45,15 +45,15 @@ public class MiniChatClient implements Disconnector {
         final String ipAddress;
         final int port;
         if(def){
+            ipAddress = "127.0.0.1";
+            port = 5000;
+        }else{
             System.out.println("접속할 서버 주소를 입력해주세요.");
             System.out.print(">>");
             ipAddress = scanner.next();
             System.out.println("접속할 서버의 포트번호를 입력해주세요.");
             System.out.print(">>");
             port = scanner.nextInt();
-        }else{
-            ipAddress = "127.0.0.1";
-            port = 5000;
         }
 
         System.out.println(String.format("%s:%d 서버로 접속합니다.", ipAddress, port));

@@ -23,9 +23,13 @@ public class MiniChatServer implements Broadcast, SocketAdder{
         receivers = new HashSet<>();
     }
 
-    public void start(){
-        createServerSocket();
+    public void start(int port){
+        createServerSocket(port);
         new Thread(waiter).start();
+    }
+
+    public void start(){
+        start(5000);
     }
 
     @Override
@@ -55,11 +59,16 @@ public class MiniChatServer implements Broadcast, SocketAdder{
         displayCurrentUserCount();
     }
 
-    private void createServerSocket(){
+    @Override
+    public int getUserCount() {
+        return receivers.size();
+    }
+
+    private void createServerSocket(int port){
         try {
-            serverSocket = new ServerSocket(5000);
+            serverSocket = new ServerSocket(port);
             waiter.setServerSocket(serverSocket);
-            System.out.println("서버 시작!");
+            System.out.printf("서버 시작!(포트번호: %d)\n", port);
         } catch (IOException e) {
             e.printStackTrace();
         }

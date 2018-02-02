@@ -7,4 +7,5 @@ package com.donghee.server;
 public interface Broadcast {
     void broadcast(String message);
     void notiLeftUser(MiniChatServerReceiver receiver);
+    int getUserCount();
 }

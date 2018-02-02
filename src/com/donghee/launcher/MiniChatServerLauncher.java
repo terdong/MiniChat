@@ -9,6 +9,6 @@ import com.donghee.server.MiniChatServer;
 public class MiniChatServerLauncher {
     public static void main(String[] args) {
         MiniChatServer server = new MiniChatServer();
-        server.start();
+        server.start(5000);
     }
 }
