@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class MiniChatClient implements Disconnector {
 
-    private static final boolean def = true;
+    private static final boolean def = false;
 
     private Socket socket;
     private ObjectOutputStream objectStream = null;
