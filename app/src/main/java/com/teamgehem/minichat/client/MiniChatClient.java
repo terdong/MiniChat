@@ -1,6 +1,6 @@
-package com.donghee.client;
+package com.teamgehem.minichat.client;
 
-import com.donghee.protocol.Protocol;
+import com.teamgehem.minichat.protocol.Protocol;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * Created by Administrator on 2017-02-19.
+ * Created by Donghee Kim on 2017-02-19.
  */
 
 public class MiniChatClient implements Disconnector {

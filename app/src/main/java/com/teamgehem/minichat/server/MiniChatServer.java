@@ -1,4 +1,4 @@
-package com.donghee.server;
+package com.teamgehem.minichat.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.HashSet;
 
 /**
- * Created by Administrator on 2017-02-19.
+ * Created by Donghee Kim on 2017-02-19.
  */
 
 public class MiniChatServer implements Broadcast, SocketAdder{

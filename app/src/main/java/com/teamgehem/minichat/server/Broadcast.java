@@ -1,7 +1,7 @@
-package com.donghee.server;
+package com.teamgehem.minichat.server;
 
 /**
- * Created by Administrator on 2017-02-19.
+ * Created by Donghee Kim on 2017-02-19.
  */
 
 public interface Broadcast {

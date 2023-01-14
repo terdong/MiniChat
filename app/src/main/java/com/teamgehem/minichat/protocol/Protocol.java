@@ -1,9 +1,9 @@
-package com.donghee.protocol;
+package com.teamgehem.minichat.protocol;
 
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2017-02-25.
+ * Created by Donghee Kim on 2017-02-25.
  */
 
 public class Protocol implements Serializable{

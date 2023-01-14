@@ -1,15 +1,14 @@
-package com.donghee.server;
+package com.teamgehem.minichat.server;
 
-import com.donghee.protocol.Protocol;
+import com.teamgehem.minichat.protocol.Protocol;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 
 /**
- * Created by Administrator on 2017-02-19.
+ * Created by Donghee Kim on 2017-02-19.
  */
 
 public class MiniChatServerReceiver implements Runnable {

@@ -1,9 +1,9 @@
-package com.donghee.launcher;
+package com.teamgehem.minichat.launcher;
 
-import com.donghee.client.MiniChatClient;
+import com.teamgehem.minichat.client.MiniChatClient;
 
 /**
- * Created by Administrator on 2017-02-19.
+ * Created by Donghee Kim on 2017-02-19.
  */
 
 public class MiniChatClientLauncher {

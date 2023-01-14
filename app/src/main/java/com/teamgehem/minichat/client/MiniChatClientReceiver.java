@@ -1,4 +1,4 @@
-package com.donghee.client;
+package com.teamgehem.minichat.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 /**
- * Created by Administrator on 2017-02-19.
+ * Created by Donghee Kim on 2017-02-19.
  */
 
 public class MiniChatClientReceiver implements Runnable{
